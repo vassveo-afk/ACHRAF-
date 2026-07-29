@@ -1,7 +1,5 @@
 import { motion } from 'motion/react';
 import { Droplet, ShieldCheck, Timer, Shield, CheckCircle2 } from 'lucide-react';
-import productImage from '../assets/product-image.png';
-
 export default function Hero() {
   const scrollToOrder = () => {
     document.getElementById('order-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -74,7 +72,7 @@ export default function Hero() {
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/80 to-transparent z-10"></div>
             <img 
-              src={productImage} 
+              src="/product-image.png" 
               alt="فلتر المياه المنزلي RO" 
               className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
             />
