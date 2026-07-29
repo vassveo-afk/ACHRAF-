@@ -12,23 +12,15 @@ async function startServer() {
 
   app.use(express.json());
 
+  const orders: any[] = [];
+
   // API Routes
   app.post('/api/orders', async (req, res) => {
     try {
       const order = { ...req.body, id: Date.now().toString(), createdAt: new Date().toISOString() };
       
-      // Save locally to data/orders.json
-      const ordersPath = path.join(process.cwd(), 'data', 'orders.json');
-      let orders = [];
-      try {
-        const data = await fs.readFile(ordersPath, 'utf-8');
-        orders = JSON.parse(data);
-      } catch (err) {
-        // File might not exist yet, that's fine
-      }
-      
+      // Save in memory for demo purposes
       orders.push(order);
-      await fs.writeFile(ordersPath, JSON.stringify(orders, null, 2));
 
       // Post to Google Sheets webhook if configured
       const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
@@ -53,7 +45,7 @@ async function startServer() {
   });
 
   // Vite middleware for development
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && !process.env.DEPLOYED) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
