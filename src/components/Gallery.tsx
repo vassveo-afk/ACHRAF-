@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import productImage from '../assets/product-image.png';
-import gallery1 from '../assets/gallery-1.png';
-import gallery2 from '../assets/gallery-2.png';
-import gallery3 from '../assets/gallery-3.png';
 
 const images = [
-  productImage,
-  gallery1,
-  gallery2,
-  gallery3
+  "/product-image.png",
+  "/gallery-1.png",
+  "/gallery-2.png",
+  "/gallery-3.png"
 ];
 
 export default function Gallery() {
