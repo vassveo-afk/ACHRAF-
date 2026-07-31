@@ -16,6 +16,8 @@ const orderSchema = z.object({
 
 type OrderFormValues = z.infer<typeof orderSchema>;
 
+const googleSheetsWebhookUrl = import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL;
+
 export default function OrderForm({ onSuccess }: { onSuccess: (data: OrderFormValues) => void }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -42,19 +44,26 @@ export default function OrderForm({ onSuccess }: { onSuccess: (data: OrderFormVa
     setIsSubmitting(true);
     setSubmitError('');
     try {
-      const response = await fetch('/api/orders', {
+      if (!googleSheetsWebhookUrl) {
+        throw new Error('Missing Google Sheets webhook URL');
+      }
+
+      await fetch(googleSheetsWebhookUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          ...data,
+          submittedAt: new Date().toISOString(),
+        }),
       });
 
-      if (!response.ok) {
-        console.warn('API submission failed. Simulating success for static deployment.');
-      }
       onSuccess(data);
     } catch (err) {
-      console.warn('Network error or API unavailable. Simulating success for static deployment.', err);
-      onSuccess(data);
+      console.error('Order submission failed.', err);
+      setSubmitError('تعذر إرسال الطلب. المرجو المحاولة مرة أخرى أو التواصل معنا عبر واتساب.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
