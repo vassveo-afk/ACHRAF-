@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Droplet, ShieldCheck, Timer, Shield, CheckCircle2 } from 'lucide-react';
-import productImage from '../assets/product-image.png';
+import productImage from '../assets/product-image.jpeg';
 export default function Hero() {
   const scrollToOrder = () => {
     document.getElementById('order-section')?.scrollIntoView({ behavior: 'smooth' });

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import productImage from '../assets/product-image.png';
-import gallery1 from '../assets/gallery-1.png';
-import gallery2 from '../assets/gallery-2.png';
-import gallery3 from '../assets/gallery-3.png';
+import productImage from '../assets/product-image.jpeg';
+import gallery1 from '../assets/gallery-1.jpeg';
+import gallery2 from '../assets/gallery-2.jpeg';
+import gallery3 from '../assets/gallery-3.jpeg';
 
 const images = [
   productImage,
